@@ -1,0 +1,27 @@
+[
+    {
+      "title": "Complete Project Proposal",
+      "description": "Draft and submit the project proposal document to the team.",
+      "dueDate": "2024-02-10T00:00:00.000Z",
+      "status": "Pending"
+    },
+    {
+      "title": "Design Wireframes for UI",
+      "description": "Create wireframes for the user interface based on project requirements.",
+      "dueDate": "2024-02-20T00:00:00.000Z",
+      "status": "In Progress"
+    },
+    {
+      "title": "Code Refactoring",
+      "description": "Review and refactor existing code for better maintainability and performance.",
+      "dueDate": "2024-03-05T00:00:00.000Z",
+      "status": "Completed"
+    },
+    {
+      "title": "Testing and QA",
+      "description": "Conduct thorough testing and quality assurance on the developed features.",
+      "dueDate": "2024-03-15T00:00:00.000Z",
+      "status": "Pending"
+    }
+  ]
+  
