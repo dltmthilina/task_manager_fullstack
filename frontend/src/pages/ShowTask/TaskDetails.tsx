@@ -10,12 +10,13 @@ const TaskDetails = () => {
     const [task, setTask] = useState<TaskModel>();
 
     const selectTask = () => {
-       return Tasks.taskes.find((t)=>t.id.toString() === taskId)
+      const data = Tasks.taskes.find((t)=>t.id.toString() === taskId)
+       return  TaskModel.fromJsonData(data) 
     }
 
     useEffect(()=>{
         const selectedTask = selectTask()
-        //setTask(selectedTask[0])
+        setTask(selectedTask)
         console.log(selectedTask);
     },[])
 
@@ -27,32 +28,32 @@ const TaskDetails = () => {
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
           <Typography variant="subtitle1">
-            <strong>Title:</strong> {/* {task.title} */}
+            <strong>Title:</strong> {task?.title}
           </Typography>
         </Grid>
         <Grid item xs={12} md={6}>
           <Typography variant="subtitle1">
-            <strong>Description:</strong> {/* {task.description} */}
+            <strong>Description:</strong> {task?.description}
           </Typography>
         </Grid>
         <Grid item xs={12} md={6}>
           <Typography variant="subtitle1">
-            <strong>Created Date:</strong> {/* {task.createdDate} */}
+            <strong>Created Date:</strong>{`${task?.dueDate}`}
           </Typography>
         </Grid>
         <Grid item xs={12} md={6}>
           <Typography variant="subtitle1">
-            <strong>Due Date:</strong> {/* {task.dueDate} */}
+            <strong>Due Date:</strong> {`${task?.dueDate}`}
           </Typography>
         </Grid>
         <Grid item xs={12} md={6}>
           <Typography variant="subtitle1">
-            <strong>Last Updated Date:</strong> {/* {task.lastUpdatedDate} */}
+            <strong>Last Updated Date:</strong> {`${task?.updatedDate}`}
           </Typography>
         </Grid>
         <Grid item xs={12} md={6}>
           <Typography variant="subtitle1">
-            <strong>Status:</strong> <Chip /* label={task.status} */ color="primary" />
+            <strong>Status:</strong> <Chip  label={task?.status} color="primary" />
           </Typography>
         </Grid>
       </Grid>
