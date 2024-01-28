@@ -1,16 +1,28 @@
 // src/index.js
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
+import mongoose from 'mongoose';
+
+const taskRoutes = require('./routes/task-routes'); 
+const userRoutes = require('./routes/user-routes');
 
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
+const mongodb_url = process.env.MONGODB_API || "";
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Express + TypeScript Server");
-});
+app.use("/api/tasks", taskRoutes);
+//app.use("/api/users", userRoutes);
 
-app.listen(port, () => {
-  console.log(`[server]: Server is running at http://localhost:${port}`);
-});
+
+
+mongoose
+  .connect(mongodb_url)
+  .then(() => {
+    console.log("connected to the database");
+    app.listen(port);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
