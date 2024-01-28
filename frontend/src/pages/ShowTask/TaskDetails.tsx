@@ -3,6 +3,7 @@ import { Paper, Typography, Grid, Chip } from '@mui/material';
 import Tasks from "../../tasks.json"
 import { useParams } from 'react-router-dom';
 import { TaskModel } from '../../models/TaskModel';
+import Layout from '../../components/Layout/Layout';
 
 const TaskDetails = () => {
 
@@ -20,7 +21,7 @@ const TaskDetails = () => {
         console.log(selectedTask);
     },[])
 
-  return (
+  return (<Layout>
     <Paper className="p-6">
       <Typography variant="h5" gutterBottom>
         Task Details
@@ -58,6 +59,7 @@ const TaskDetails = () => {
         </Grid>
       </Grid>
     </Paper>
+    </Layout>
   );
 };
 
