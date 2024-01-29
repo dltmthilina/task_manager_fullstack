@@ -16,7 +16,7 @@ const mongodb_url = process.env.MONGODB_API || "";
 app.use(express.json());
 app.use(bodyParser.json());
 app.use("/api/tasks", taskRoutes);
-//app.use("/api/users", userRoutes);
+app.use("/api/users", userRoutes);
 
 
 
