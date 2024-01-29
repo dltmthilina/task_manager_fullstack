@@ -4,10 +4,10 @@ const Schema = mongoose.Schema;
 
 const taskSchema = new Schema({
     title:{type: String, require: true},
-    description:{type: String, require: true},
-    dueData:{type: Date, require: true},
-    status:{type: Boolean, require: true},
-    creator:{type: mongoose.Types.ObjectId, require: true, ref: 'User'},
+    description:{type: String, require: false},
+    dueData:{type: Date, require: false},
+    status:{type: String, require: false},
+    creator:{type: String, require: false, ref: 'User'},
 })
 
 module.exports = mongoose.model('Task', taskSchema);
