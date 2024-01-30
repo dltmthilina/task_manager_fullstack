@@ -5,11 +5,15 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Dashboard from './pages/Dashboard/Dashboard';
 import TaskForm from './pages/TaskForm/TaskForm';
 import TaskDetails from './pages/ShowTask/TaskDetails';
+import RegisterPage from './pages/Register/RegisterPage';
 
 const router = createBrowserRouter([
   {
     path:'/',
     element:<LoginPage/>
+  },{
+    path:'/register',
+    element:<RegisterPage/>
   },
   {
     path:'/dashboard',

@@ -1,65 +1,67 @@
-import { Button, Grid, Paper, Stack, Typography } from "@mui/material"
-import TextField from "@mui/material/TextField"
+import { Button, Grid, Paper, Typography } from "@mui/material";
+import TextField from "@mui/material/TextField";
 
 const LoginPage = () => {
-    
-return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <Grid container component="main">
+  return (
+    <div>
+      <div className="flex flex-col items-center justify-center bg-gray-100 min-h-screen">
+        <Grid container component="main" className="w-full">
 
-        <Grid item xs={false} sm={6} className="hidden sm:block">
-          <img
-            src="https://via.placeholder.com/300"
-            alt="Login Image"
-            className="w-full h-full object-cover"
-          />
-        </Grid>
+          {/* Image Section */}
+          <Grid item xs={12} sm={6} className="mb-6 sm:mb-0">
+            <img
+              src="https://www.sapphiresolutions.net/images/task_management_app/images/task_app_banner.svg"
+              alt="Login Image"
+              className="w-full h-full object-cover md:object-contain"
+            />
+          </Grid>
 
-        <Grid item xs={12} sm={6} component={Paper} elevation={6} square className="flex justify-center items-center">
-          <div className="p-10 w-1/2 flex flex-col">
-            <Typography component="h1" variant="h5" className="mb-4">
-              Login
-            </Typography>
-        
-            <form noValidate>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="username"
-                label="Username"
-                name="username"
-                autoComplete="username"
-                autoFocus
-                className="mb-4"
-              />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                className="mb-4"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-              >
-                Sign In
-              </Button>
-            </form>
-          </div>
+          {/* Form Section */}
+          <Grid item xs={12} sm={6} component={Paper} square className="flex justify-center items-center md:h-screen">
+            <div className="p-6 md:w-96 w-full">
+              <Typography component="h1" variant="h5" className="mb-4">
+                Login
+              </Typography>
+              
+              <form noValidate className="flex flex-col space-y-4">
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="username"
+                  autoFocus
+                />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                >
+                  Sign In
+                </Button>
+              </form>
+            </div>
+          </Grid>
+
         </Grid>
-      </Grid>
+      </div>
     </div>
-)
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;
