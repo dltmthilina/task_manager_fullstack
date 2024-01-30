@@ -10,7 +10,7 @@ const userRoutes = require('./routes/user-routes');
 dotenv.config();
 
 const app: Express = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 const mongodb_url = process.env.MONGODB_API || "";
 
 app.use(express.json());
