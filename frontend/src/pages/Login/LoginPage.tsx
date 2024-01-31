@@ -1,7 +1,26 @@
 import { Button, Grid, Paper, Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
+import { useFormik } from "formik";
+import { UserModel } from "../../models/UserModel";
+import { useState } from "react";
+import { userValidationSchema } from "../../common/validatios";
 
 const LoginPage = () => {
+
+  const [initialData, setInitialData] = useState<UserModel>({
+    name: "",
+    email: "",
+    password: "",
+    imageUrl: "",
+});
+
+  const formik = useFormik({
+    initialValues:initialData,
+    onSubmit:(values)=>{
+      console.log(values);
+    }
+  });
+
   return (
     <div>
       <div className="flex flex-col items-center justify-center bg-gray-100 min-h-screen">
@@ -23,17 +42,18 @@ const LoginPage = () => {
                 Login
               </Typography>
               
-              <form noValidate className="flex flex-col space-y-4">
+              <form noValidate onSubmit={formik.handleSubmit} className="flex flex-col space-y-4">
                 <TextField
                   variant="outlined"
                   margin="normal"
                   required
                   fullWidth
-                  id="username"
-                  label="Username"
-                  name="username"
-                  autoComplete="username"
+                  id="email"
+                  label="Email"
+                  name="email"
                   autoFocus
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
                 <TextField
                   variant="outlined"
@@ -44,7 +64,8 @@ const LoginPage = () => {
                   label="Password"
                   type="password"
                   id="password"
-                  autoComplete="current-password"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
                 <Button
                   type="submit"

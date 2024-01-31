@@ -1,7 +1,9 @@
 // RegistrationForm.tsx
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState } from 'react';
 import { TextField, Button, Grid, Typography, Paper } from '@mui/material';
-
+import { useFormik } from 'formik';
+import { userValidationSchema } from '../../common/validatios';
+import { UserFormModel } from '../../models/UserModel';
 interface FormData {
   name: string;
   email: string;
@@ -10,6 +12,24 @@ interface FormData {
 }
 
 const RegisterPage: React.FC = () => {
+
+    const [initialData, setInitialData] = useState<UserFormModel>({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        imageUrl: "",
+    });
+
+    const formik =  useFormik({
+        initialValues: initialData,
+        validationSchema:userValidationSchema,
+        onSubmit:(values)=>{
+          console.log(values);
+        }
+    });
+
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -29,7 +49,7 @@ const RegisterPage: React.FC = () => {
               Register
             </Typography>
         
-        <form className="flex flex-col space-y-4">
+        <form className="flex flex-col space-y-4" onSubmit={formik.handleSubmit }>
 
         <TextField
           label="Name"
@@ -37,8 +57,11 @@ const RegisterPage: React.FC = () => {
           fullWidth
           margin="normal"
           name="name"
-          value={""}
-          onChange={()=>{}}
+          value={formik.values.name}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.name && formik.errors.name? true:false}
+          helperText={formik.errors.name}
         />
 
         <TextField
@@ -48,8 +71,11 @@ const RegisterPage: React.FC = () => {
           margin="normal"
           type="email"
           name="email"
-          value={""}
-          onChange={()=>{}}
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.email && formik.errors.email? true:false}
+          helperText={formik.errors.email}
         />
 
         <TextField
@@ -59,8 +85,25 @@ const RegisterPage: React.FC = () => {
           margin="normal"
           type="password"
           name="password"
-          value={""}
-          onChange={()=>{} }
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.password && formik.errors.password? true:false}
+          helperText={formik.errors.password}
+        />
+
+        <TextField
+          label="Confirm Password"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          type="password"
+          name="confirmPassword"
+          value={formik.values.confirmPassword}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.confirmPassword && formik.errors.confirmPassword? true:false}
+          helperText={formik.errors.confirmPassword}
         />
 
         <TextField
@@ -69,8 +112,11 @@ const RegisterPage: React.FC = () => {
           fullWidth
           margin="normal"
           name="imageUrl"
-          value={""}
-          onChange={()=>{}}
+          value={formik.values.imageUrl}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.imageUrl && formik.errors.imageUrl? true:false}
+          helperText={formik.errors.imageUrl}
         />
 
         
