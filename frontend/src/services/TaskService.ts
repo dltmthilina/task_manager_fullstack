@@ -1,11 +1,11 @@
 import axios from "axios";
 import { TaskModel } from "../models/TaskModel";
-const basePath = process.env.BACKEND_BASE_URL
+const basePath = process.env.REACT_APP_BACKEND_BASE_URL;
 
 export class TaskService {
 
     static async createTask (data: TaskModel) {
-
+            console.log(basePath)
         try {
             const response = await axios.post(`${basePath}/api/tasks/create-task`, data);
             console.log(response)

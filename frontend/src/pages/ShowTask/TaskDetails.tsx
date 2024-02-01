@@ -49,7 +49,7 @@ const TaskDetails = () => {
         </Grid>
         <Grid item xs={12} md={6}>
           <Typography variant="subtitle1">
-            <strong>Last Updated Date:</strong> {`${task?.updatedDate}`}
+            <strong>Last Updated Date:</strong> {``}
           </Typography>
         </Grid>
         <Grid item xs={12} md={6}>
