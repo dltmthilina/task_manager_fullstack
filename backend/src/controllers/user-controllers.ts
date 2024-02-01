@@ -2,6 +2,8 @@ import { Response, Request, NextFunction } from "express";
 
 const {validationResult} = require('express-validator');
 const User = require('../models/user');
+const bcrypt = require('bcrypt');
+
 
 const getUsers= async(req: Request, res: Response, next: NextFunction)=>{
 
@@ -16,12 +18,14 @@ const getUsers= async(req: Request, res: Response, next: NextFunction)=>{
 };
 
 const signup= async(req: Request, res: Response, next: NextFunction)=>{
+
     const errors = validationResult(req);
+    const {name, email, password, imageUrl} = req.body;
+
     if(!errors.isEmpty()){
        return next(new HttpError("Invalid inputs, please check your data", 422))
     }
-    const {name, email, password} = req.body;
-
+    
     let existingUser
     try {
         existingUser = await User.findOne({email:email});
@@ -35,22 +39,33 @@ const signup= async(req: Request, res: Response, next: NextFunction)=>{
         return next(error)
     }
 
-    const createdUser = new User({
-        name,
-        email,
-        image: "https://media-exp1.licdn.com/dms/image/C5603AQF3g4a3m3_dVw/profile-displayphoto-shrink_200_200/0/1651069085398?e=1675296000&v=beta&t=jNtCxSaRWnhc4vRs6HpACKnFkNNjUqe-eyjPD50qOd0",
-        password,
-        places:[]
-    })
-
     try {
-        await createdUser.save();
+
+        bcrypt.hash(password, 10, async function (err:any, hash:string) {
+            if (err) {
+                return res.status(400).json({
+                    "Error": err.message
+                })
+            } else {
+
+                const user = new User({
+                    name :name,
+                    email : email,
+                    image:!imageUrl?"https://cdn.onlinewebfonts.com/svg/img_569204.png":imageUrl,
+                    password: hash
+                });
+                user.save().then(() => {
+                    return res.status(200).json({
+                        "user": user
+                    })
+                })
+            }
+        })
     } catch (err) {
          const error = new HttpError('Signin up failed, please try again later', 500)
         return next(error) 
     }
-    
-    res.status(201).json({user:createdUser.toObject({getters:true})})
+
 };
 
 const login= async(req:Request, res: Response, next: NextFunction) =>{
