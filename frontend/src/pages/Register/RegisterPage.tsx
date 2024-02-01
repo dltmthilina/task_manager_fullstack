@@ -4,6 +4,7 @@ import { TextField, Button, Grid, Typography, Paper } from '@mui/material';
 import { useFormik } from 'formik';
 import { userValidationSchema } from '../../common/validatios';
 import { UserFormModel } from '../../models/UserModel';
+import { UserService } from '../../services/UserService';
 interface FormData {
   name: string;
   email: string;
@@ -21,15 +22,18 @@ const RegisterPage: React.FC = () => {
         imageUrl: "",
     });
 
+    const userReg = async(data:UserFormModel) => {
+      const res = await UserService.userRegister(data);
+      console.log(res);
+    }
+
     const formik =  useFormik({
         initialValues: initialData,
         validationSchema:userValidationSchema,
         onSubmit:(values)=>{
-          console.log(values);
+          userReg(values);
         }
     });
-
-
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">

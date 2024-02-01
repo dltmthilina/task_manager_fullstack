@@ -1,8 +1,8 @@
 import axios from "axios"
 import { UserFormModel, UserModel } from "../models/UserModel"
-const basePath = process.env.BACKEND_BASE_URL
+const basePath = process.env.REACT_APP_BACKEND_BASE_URL
 
-export class userService {
+export class UserService {
 
     static userLogin = async(data:UserModel) => {
         try {
