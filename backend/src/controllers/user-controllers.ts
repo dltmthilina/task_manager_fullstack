@@ -1,8 +1,10 @@
 import { Response, Request, NextFunction } from "express";
+const HttpError = require('../models/http-error');
 
 const {validationResult} = require('express-validator');
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 
 const getUsers= async(req: Request, res: Response, next: NextFunction)=>{
@@ -23,20 +25,24 @@ const signup= async(req: Request, res: Response, next: NextFunction)=>{
     const {name, email, password, imageUrl} = req.body;
 
     if(!errors.isEmpty()){
-       return next(new HttpError("Invalid inputs, please check your data", 422))
+       return res.status(422).json({
+        "Error": "Invalid inputs, please check your data"
+        })
     }
     
-    let existingUser
+    let existingUser: typeof User[]
     try {
         existingUser = await User.findOne({email:email});
     } catch (err) {
-        const error = new HttpError('Signup failed, please try again later', 500)
-        return next(error);
+        return res.status(422).json({
+            "Error": "Signup failed, please try again later"
+        })
     } 
 
     if(existingUser){
-        const error =  new HttpError("Could not create user, email already exist", 422);
-        return next(error)
+        return res.status(422).json({
+            "Error": "Could not create user, email already exist"
+        })
     }
 
     try {
@@ -56,22 +62,28 @@ const signup= async(req: Request, res: Response, next: NextFunction)=>{
                 });
                 user.save().then(() => {
                     return res.status(200).json({
-                        "user": user
+                        user:{
+                        name :name,
+                        email : email,
+                        image:!imageUrl?"https://cdn.onlinewebfonts.com/svg/img_569204.png":imageUrl,
+                        }
+                        
                     })
                 })
             }
         })
     } catch (err) {
-         const error = new HttpError('Signin up failed, please try again later', 500)
-        return next(error) 
+         return res.status(500).json({
+            "Error": "Signin up failed please try again later"
+        })
     }
 
 };
 
 const login= async(req:Request, res: Response, next: NextFunction) =>{
-    const {email, password} = req.body;
+    const {email } = req.body;
     
-    let existingUser
+    let existingUser: typeof User
     try {
         existingUser = await User.findOne({email:email});
     } catch (err) {
@@ -79,12 +91,35 @@ const login= async(req:Request, res: Response, next: NextFunction) =>{
         return next(error);
     }
 
-    if(!existingUser || existingUser.password !== password){
-        const error = new HttpError('Invalid credentials, could not log you in', 401)
-        return next(error)
+    if (!existingUser) {
+        return res. status(400).json({message:"No User Exists With given Email / Phone Number"})
+    } else {
+        bcrypt.compare(req.body.password, existingUser.password, function (err:any, result:any) { 
+            if (err) {
+                return res.status(401).json({
+                    message: err.message
+                })
+            }
+            if (result) {
+                const token = jwt.sign({
+                    exp: Math.floor(Date.now() / 1000) + (60 * 60),
+                    data: existingUser._id
+                });
+
+                return res.status(200).json({
+                   message:"LoggedIn Success",
+                   "token":token
+                })
+            } else {
+                return res.status(401).json({
+                    message:"Invalid Credentials"
+                })
+            }
+
+        })
+
     }
     
-    res.json({message:"Logged in!", user: existingUser.toObject({getters:true})});
 }
 
 exports.getUsers= getUsers;
