@@ -7,7 +7,7 @@ export class UserService {
     static userLogin = async(data:UserModel) => {
         try {
            const response = await axios.post(`${basePath}/api/users/login`, data)
-           console.log(response)
+           return response
     
         } catch (error) {
             console.log(error);

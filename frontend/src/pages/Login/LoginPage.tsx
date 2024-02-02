@@ -4,8 +4,12 @@ import { useFormik } from "formik";
 import { UserModel } from "../../models/UserModel";
 import { useState } from "react";
 import { userValidationSchema } from "../../common/validatios";
+import { UserService } from "../../services/UserService";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+
+  const navigate = useNavigate();
 
   const [initialData, setInitialData] = useState<UserModel>({
     name: "",
@@ -14,10 +18,19 @@ const LoginPage = () => {
     imageUrl: "",
 });
 
+
   const formik = useFormik({
     initialValues:initialData,
-    onSubmit:(values)=>{
-      console.log(values);
+    onSubmit: async(values)=>{
+      await UserService.userLogin(values)
+      .then((res)=>{
+        if(res?.status === 200){
+            navigate("/dashboard");
+        } else{
+          return
+        }
+      })
+      .catch((err)=>console.log(err));
     }
   });
 
