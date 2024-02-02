@@ -186,7 +186,7 @@ export default function TaskTable() {
                     <TableCell align="left">{row.status}</TableCell>
                     <TableCell align="left">
                         <div className='flex space-x-2'>
-                          <VisibilityIcon fontSize="small" onClick={()=>navigate(`/task/${row.id}`)}/>
+                          <VisibilityIcon fontSize="small" onClick={()=>navigate(`/edit-task/${row.id}`)}/>
                           <EditIcon fontSize="small" onClick={()=>navigate(`/edit-task/${row.id}`)}/>
                           <DeleteIcon fontSize="small"/>
                         </div>

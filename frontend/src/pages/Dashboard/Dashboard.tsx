@@ -2,8 +2,29 @@ import { Grid, Typography } from "@mui/material"
 import Layout from "../../components/Layout/Layout"
 import TaskTable from "../../components/TaskTable/TaskTable"
 import { AddTask } from "@mui/icons-material"
+import { useEffect } from "react"
+import { TaskService } from "../../services/TaskService"
+import { useParams } from "react-router-dom"
 
 const Dashboard = () => {
+
+    const {uid} = useParams();
+
+    const fetchAllTasks = async(uid:string) =>{
+        try {
+           const tasks = await TaskService.getTaskByUserId(uid)
+           console.log(tasks);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(()=>{
+        if(uid){
+            fetchAllTasks(uid)
+        }
+    },[]);
+
     return<Layout>
         <Grid container className=" flex flex-col md:flex md:flex-row ">
             <Grid item xs={3} >

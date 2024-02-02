@@ -17,7 +17,7 @@ export class TaskService {
     static async getTaskByUserId (uid:string) {
         try {
             const response = await axios.get(`${basePath}/api/tasks/${uid}`);
-            console.log(response)
+            return response
         } catch (error) {
             console.log(error);
         }
