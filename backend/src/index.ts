@@ -7,6 +7,7 @@ import bodyParser from "body-parser";
 const taskRoutes = require('./routes/task-routes'); 
 const userRoutes = require('./routes/user-routes');
 const cors = require("cors");
+const Auth = require('./middlewares/authorization');
 
 dotenv.config();
 
@@ -22,7 +23,7 @@ app.use(cors({
   origin: ['http://localhost:3000']
   }));
   
-app.use("/api/tasks", taskRoutes);
+app.use("/api/tasks", Auth,  taskRoutes);
 app.use("/api/users", userRoutes);
 
 
