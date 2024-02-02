@@ -88,12 +88,13 @@ const login= async(req:Request, res: Response, next: NextFunction) =>{
     try {
         existingUser = await User.findOne({email:email});
     } catch (err) {
-        const error = new HttpError('Signup failed, please try again later', 500)
-        return next(error);
+        return res.status(500).json({
+            message: 'Signup failed, please try again later'
+        })
     }
 
     if (!existingUser) {
-        return res. status(400).json({message:"No User Exists With given Email / Phone Number"})
+        return res. status(400).json({message:"No User Exists With given Email"})
     } else {
         bcrypt.compare(req.body.password, existingUser.password, function (err:any, result:any) { 
             if (err) {
