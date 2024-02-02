@@ -5,6 +5,7 @@ const {validationResult} = require('express-validator');
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const secret = "taskmanager"
 
 
 const getUsers= async(req: Request, res: Response, next: NextFunction)=>{
@@ -104,7 +105,7 @@ const login= async(req:Request, res: Response, next: NextFunction) =>{
                 const token = jwt.sign({
                     exp: Math.floor(Date.now() / 1000) + (60 * 60),
                     data: existingUser._id
-                });
+                }, secret);
 
                 return res.status(200).json({
                    message:"LoggedIn Success",
