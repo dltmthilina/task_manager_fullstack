@@ -9,6 +9,7 @@ export class UserService {
            const response = await axios.post(`${basePath}/api/users/login`, data)
            if(response.data.success === true){
             localStorage.setItem('token', response.data.token)
+            localStorage.setItem('user', JSON.stringify(response.data.user));
            }
            return response
     

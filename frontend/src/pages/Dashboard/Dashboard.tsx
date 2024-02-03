@@ -8,6 +8,21 @@ import { TaskModel } from "../../models/TaskModel"
 
 const Dashboard = () => {
 
+    const [loggedUser, setLoggedUser] = useState({
+        "name":"",
+        "email":""
+    });
+    useEffect(()=>{
+        const fetchedLoggedUser = async()=>{
+            const user = await localStorage.getItem('user')
+            const retrievedUser = user ? JSON.parse(user) : null;
+            setLoggedUser(retrievedUser); 
+            console.log(retrievedUser)
+        }
+        fetchedLoggedUser();
+       
+    },[]);
+
     const [isProcessing, setIsProcessing] = useState(false);
     const [tasks, setTasks] = useState<TaskModel[]>();
 
@@ -38,11 +53,11 @@ const Dashboard = () => {
                     <div>
                         <div className="flex space-x-4">
                             <Typography>Name : </Typography>
-                            <Typography>Thilina</Typography>
+                            <Typography>{loggedUser?.name}</Typography>
                         </div>
                         <div className="flex space-x-4">
                             <Typography>Email :</Typography>
-                            <Typography>thilina@gmail.com</Typography>
+                            <Typography>{loggedUser?.email}</Typography>
                         </div>
                     </div>
                 </div>

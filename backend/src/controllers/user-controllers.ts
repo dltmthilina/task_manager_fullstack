@@ -108,6 +108,10 @@ const login= async(req:Request, res: Response, next: NextFunction) =>{
                 return res.status(200).json({
                    success : true,
                    message:"LoggedIn Success",
+                   user:{
+                    "email":existingUser.email,
+                    "name": existingUser.name
+                   },
                    token: token
                 })
             } else {
