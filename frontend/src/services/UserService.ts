@@ -22,7 +22,7 @@ export class UserService {
 
         try {
             const response = await axios.post(`${basePath}/api/users/register`, data)
-            console.log(response)
+            return response
             
         } catch (error) {
             console.log(error);

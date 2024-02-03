@@ -10,7 +10,7 @@ export class TaskService {
             console.log(basePath)
         try {
             const response = await axios.post(`${basePath}/api/tasks/create-task`, data, { headers: { "authorization": TaskService.token } });
-            console.log(response)
+            return response
         } catch (error) {
             console.log(error);
         }

@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import { userValidationSchema } from '../../common/validatios';
 import { UserFormModel } from '../../models/UserModel';
 import { UserService } from '../../services/UserService';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 interface FormData {
   name: string;
   email: string;
@@ -23,9 +23,13 @@ const RegisterPage: React.FC = () => {
         imageUrl: "",
     });
 
+    const navigate = useNavigate();
+
     const userReg = async(data:UserFormModel) => {
       const res = await UserService.userRegister(data);
-      console.log(res);
+      if(res?.status === 200){
+        navigate('/')
+      }
     }
 
     const formik =  useFormik({
