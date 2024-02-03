@@ -32,6 +32,20 @@ export class TaskService {
         }
     }
 
+    static async getTaskByTaskId () {
+        
+        try {
+            const response = await axios.get(`${basePath}/api/task`, { headers: { "authorization": TaskService.token }});
+            if(response.data){
+                return TaskModel.fromJsonData(response.data.tasks)
+            }else {
+                console.log(response)
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     static async updateTaskStatus (tid:string) {
         try {
             const response = await axios.patch(`${basePath}/api/tasks/status/${tid}`);
