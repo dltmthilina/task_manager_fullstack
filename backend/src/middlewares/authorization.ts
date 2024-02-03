@@ -14,7 +14,7 @@ const Authentication = (req: Request, res: Response, next: NextFunction)=>{     
                     })
                 }
                 console.log(decoded)
-                //req.existingUser._id = decoded.data;
+                req.body.user_id = decoded.data;
                 next()
             })
         } else {
