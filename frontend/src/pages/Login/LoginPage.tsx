@@ -5,7 +5,7 @@ import { UserModel } from "../../models/UserModel";
 import { useState } from "react";
 import { userValidationSchema } from "../../common/validatios";
 import { UserService } from "../../services/UserService";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
 
@@ -89,6 +89,7 @@ const LoginPage = () => {
                   Sign In
                 </Button>
               </form>
+              <Typography>Don't have an account? <Link to="/register">Register</Link></Typography>
             </div>
           </Grid>
 

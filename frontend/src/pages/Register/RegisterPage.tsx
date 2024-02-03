@@ -1,10 +1,11 @@
 // RegistrationForm.tsx
 import React, { useState } from 'react';
-import { TextField, Button, Grid, Typography, Paper } from '@mui/material';
+import { TextField, Button, Grid, Typography, Paper} from '@mui/material';
 import { useFormik } from 'formik';
 import { userValidationSchema } from '../../common/validatios';
 import { UserFormModel } from '../../models/UserModel';
 import { UserService } from '../../services/UserService';
+import { Link } from 'react-router-dom';
 interface FormData {
   name: string;
   email: string;
@@ -128,6 +129,7 @@ const RegisterPage: React.FC = () => {
           Register
         </Button>
       </form>
+      <Typography>Do you have an account already? <Link to="/">Login</Link></Typography>
           </div>
         </Grid>
       </Grid>
