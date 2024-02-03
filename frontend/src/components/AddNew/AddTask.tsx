@@ -16,7 +16,7 @@ const AddTask = () => {
     const submitHandler = async(e:any) => {
         e.preventDefault();
         console.log(task)
-         await TaskService.createTask(task)
+         await TaskService.createTask(TaskModel.convertToJson(task))
         .then((res)=>console.log(res))
         .catch((err)=>console.log(err));
     }
