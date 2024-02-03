@@ -57,7 +57,7 @@ export class TaskService {
 
     static async updateTask (tid:string, data: TaskModel) {
         try {
-            const response = await axios.put(`${basePath}/api/tasks/${tid}`, data);
+            const response = await axios.put(`${basePath}/api/tasks/${tid}`, data, { headers: { "authorization": TaskService.token }});
             console.log(response)
         } catch (error) {
             console.log(error);
