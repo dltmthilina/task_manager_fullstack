@@ -11,7 +11,7 @@ const TaskDetails = () => {
     const [task, setTask] = useState<TaskModel>();
 
     const selectTask = () => {
-      const data = Tasks.taskes.find((t)=>t.id.toString() === taskId)
+      const data = Tasks.tasks.find((t)=>t.id.toString() === taskId)
        return  TaskModel.fromJsonData(data) 
     }
 
