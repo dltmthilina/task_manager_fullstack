@@ -36,7 +36,7 @@ export default function TaskTable({tasks, setIsDeleting}: IProps) {
   const [selected, setSelected] = React.useState<readonly number[]>([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [rows, setRows] = React.useState(tasks);
+  const [rows, setRows] = React.useState<TaskModel[]>();
 
   React.useEffect(()=>{
     setRows(tasks)
@@ -108,8 +108,10 @@ export default function TaskTable({tasks, setIsDeleting}: IProps) {
                     >
                       {row.title}
                     </TableCell>
-                    <TableCell align="left">{}</TableCell>
-                    <TableCell align="left">{row?.dueDate?.toDateString()}</TableCell>
+                    <TableCell align="left">
+                      {row?.createdDate instanceof Date ? row.createdDate.toDateString() : 'No Date available'}
+                    </TableCell>
+                    <TableCell align="left">{row?.dueDate}</TableCell>
                     <TableCell align="left">{row.status}</TableCell>
                     <TableCell align="left">
                         <div className='flex space-x-2'>

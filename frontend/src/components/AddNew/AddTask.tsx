@@ -13,7 +13,8 @@ const AddTask = ({setIsCreating}: AddProps) => {
         "id":"",
         "title":"",
         "description":"",
-        "dueDate": new Date(),
+        "dueDate": "",
+        "createdDate": new Date(),
         "status":""  
     })
 

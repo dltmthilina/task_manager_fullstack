@@ -10,12 +10,13 @@ const createTask = async(req:Request, res: Response, next:NextFunction) => {
         next( new HttpError("Invalid inputs, please check your data", 422));
     }
 
-    const { title, description, due_date, status, user_id} = req.body;
+    const { title, description, due_date, status, user_id, created_date} = req.body;
 
     const createdTask = new Task({
         title,
         description,
         due_date,
+        created_date,
         status,
         creator:user_id
     });
@@ -24,9 +25,14 @@ const createTask = async(req:Request, res: Response, next:NextFunction) => {
         await createdTask.save();
    } catch (err) {
         const error = new HttpError(err,500 );
-       return next(error); 
+      return res.status(500).json({
+            success: false,
+            message: error
+        }) 
    }
-   res.status(201).json({task:createdTask});
+   res.status(201).json({
+    success:true,
+    task:createdTask});
 }
 
 const getTasksByUserId = async(req:Request, res: Response, next:NextFunction) => {

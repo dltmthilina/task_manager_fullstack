@@ -23,6 +23,7 @@ export class TaskService {
             if(response.data){
                 const tasks:TaskModel[] = []
                 response.data.tasks.map((t:TaskModel)=>tasks.push(TaskModel.fromJsonData(t)))
+                console.log(tasks)
                 return tasks;
             }else {
                 console.log(response)
