@@ -7,6 +7,13 @@ type Props = {
 const Layout = ({children}:Props) => {
   const navigate = useNavigate();
 
+  const logoutHandler = () =>{
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    navigate('/');
+
+  }
+
   
   return (
     <div className="">
@@ -15,13 +22,10 @@ const Layout = ({children}:Props) => {
             <div className="">
                 <ul className="flex space-x-10">
                     <li className="nav-item">
-                        <span className="" style={{ cursor: "pointer", color:"white" }} aria-current="page" onClick={() => navigate("/home")}>Home</span>
+                        <span className="" style={{ cursor: "pointer", color:"white" }} aria-current="page" onClick={() => navigate("/dashboard")}>Home</span>
                     </li>
                     <li className="">
-                        <span className="" style={{ cursor: "pointer", color:"white" }} onClick={() => navigate("/tasks")}>Tasks</span>
-                    </li>
-                    <li className="">
-                        <button className="" style={{ cursor: "pointer", color:"white" }} >Logout</button>
+                        <button className="" style={{ cursor: "pointer", color:"white" }} onClick={logoutHandler}>Logout</button>
                     </li>
                 </ul>
             </div>
