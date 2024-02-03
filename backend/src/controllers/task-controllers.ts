@@ -107,7 +107,7 @@ const updateTask = async(req:Request, res: Response, next:NextFunction) => {
         next( new HttpError("Invalid inputs, please check your data", 422));
     }
     
-    const { title, description, dueDate, status} = req.body;
+    const { title, description, due_date, status} = req.body;
 
     let task: typeof Task;
     try {
@@ -119,7 +119,7 @@ const updateTask = async(req:Request, res: Response, next:NextFunction) => {
 
     task.title = title;
     task.description = description;
-    task.dueDate = dueDate;
+    task.due_date = due_date;
     task.status = status;
     
 
