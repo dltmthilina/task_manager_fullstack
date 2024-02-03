@@ -10,14 +10,14 @@ const createTask = async(req:Request, res: Response, next:NextFunction) => {
         next( new HttpError("Invalid inputs, please check your data", 422));
     }
 
-    const { title, description, dueDate, status, creator} = req.body;
+    const { title, description, dueDate, status, user_id} = req.body;
 
     const createdTask = new Task({
         title,
         description,
         dueDate,
         status,
-        creator
+        creator:user_id
     });
 
     try {
@@ -31,17 +31,19 @@ const createTask = async(req:Request, res: Response, next:NextFunction) => {
 
 const getTasksByUserId = async(req:Request, res: Response, next:NextFunction) => {
 
-    const userId = req.params.uid;
+    const { user_id } = req.body;
     let tasks: typeof Task[];
     try {
-        tasks = await Task.find({creator : userId});
+        tasks = await Task.find({creator : user_id});
     } catch (err) {
-        const error = new HttpError('Fetching tasks failed, please try again later', 500);
-        return next(error);
+        return res.status(500).json({
+            message: 'Fetching tasks failed, please try again later'
+        })
     }
     if(!tasks || tasks.length === 0){
-        const error =  new HttpError('Could not find a tasks for the provided id.', 404); 
-        return next(error);
+        return res.status(404).json({
+            message: 'Could not find a tasks for the provided id.'
+        })
     }
     res.json({tasks: tasks.map(task=>task.toObject({getters:true}))});
 }
