@@ -14,7 +14,7 @@ export class TaskModel {
             id: data._id,
             title: data.title,
             description: data.description,
-            dueDate: data.dueDate ? new Date(data.due_date) : undefined,
+            dueDate: data.due_date ? new Date(data.due_date) : undefined,
             status: data.status,
         });
     }
