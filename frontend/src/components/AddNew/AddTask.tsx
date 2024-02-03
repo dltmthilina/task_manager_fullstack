@@ -1,9 +1,13 @@
 import { Button, TextField } from "@mui/material"
-import { useState } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 import { TaskService } from "../../services/TaskService"
 import { TaskModel } from "../../models/TaskModel"
 
-const AddTask = () => {
+interface AddProps{
+    setIsCreating: Dispatch<SetStateAction<boolean>>
+}
+
+const AddTask = ({setIsCreating}: AddProps) => {
 
     const [task, setTask] = useState<TaskModel>({
         "id":"",
@@ -15,10 +19,17 @@ const AddTask = () => {
 
     const submitHandler = async(e:any) => {
         e.preventDefault();
-        console.log(task)
+        setIsCreating(true);
+        console.log(task);
          await TaskService.createTask(TaskModel.convertToJson(task))
-        .then((res)=>console.log(res))
-        .catch((err)=>console.log(err));
+        .then((res)=>{
+            setIsCreating(false);
+            console.log(res);
+        })
+        .catch((err)=>{
+            setIsCreating(false);
+            console.log(err);
+        });
     }
 
     return <form className=" flex flex-row space-x-6 mt-2 mb-6 items-center" onSubmit={submitHandler}>

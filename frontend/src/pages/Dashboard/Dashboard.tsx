@@ -1,27 +1,33 @@
 import { Grid, Typography } from "@mui/material"
 import Layout from "../../components/Layout/Layout"
 import TaskTable from "../../components/TaskTable/TaskTable"
-import { AddTask } from "@mui/icons-material"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { TaskService } from "../../services/TaskService"
-import { useParams } from "react-router-dom"
+import AddTask from "../../components/AddNew/AddTask"
+import { TaskModel } from "../../models/TaskModel"
 
 const Dashboard = () => {
 
-    const {uid} = useParams();
+    const [isCreating, setIsCreating] = useState(false);
+    const [tasks, setTasks] = useState<TaskModel[]>();
 
     const fetchAllTasks = async() =>{
         try {
-           const tasks = await TaskService.getTaskByUserId()
-           console.log(tasks);
+           const t = await TaskService.getTaskByUserId()
+           console.log(t)
+           setTasks(t);
         } catch (error) {
             console.log(error);
         }
     }
 
     useEffect(()=>{
+        console.log(tasks)
+    },[tasks]);
+
+    useEffect(()=>{
         fetchAllTasks()
-    },[]);
+    },[isCreating]);
 
     return<Layout>
         <Grid container className=" flex flex-col md:flex md:flex-row ">
@@ -57,7 +63,8 @@ const Dashboard = () => {
                 </div>
             </Grid>
             <Grid item xs={9} className="p-2">
-                <TaskTable/>
+                <AddTask setIsCreating={setIsCreating}/> 
+                <TaskTable tasks={tasks}/>
             </Grid>
         </Grid>
     </Layout>

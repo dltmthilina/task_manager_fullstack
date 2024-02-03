@@ -20,7 +20,13 @@ export class TaskService {
         
         try {
             const response = await axios.get(`${basePath}/api/tasks`, { headers: { "authorization": TaskService.token }});
-            return response
+            if(response.data){
+                const tasks:TaskModel[] = []
+                response.data.tasks.map((t:TaskModel)=>tasks.push(TaskModel.fromJsonData(t)))
+                return tasks;
+            }else {
+                console.log(response)
+            }
         } catch (error) {
             console.log(error);
         }
