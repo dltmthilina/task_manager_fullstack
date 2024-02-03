@@ -10,12 +10,12 @@ const createTask = async(req:Request, res: Response, next:NextFunction) => {
         next( new HttpError("Invalid inputs, please check your data", 422));
     }
 
-    const { title, description, dueDate, status, user_id} = req.body;
+    const { title, description, due_date, status, user_id} = req.body;
 
     const createdTask = new Task({
         title,
         description,
-        dueDate,
+        due_date,
         status,
         creator:user_id
     });
