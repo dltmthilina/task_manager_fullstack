@@ -8,7 +8,7 @@ import { TaskModel } from "../../models/TaskModel"
 
 const Dashboard = () => {
 
-    const [isCreating, setIsCreating] = useState(false);
+    const [isProcessing, setIsProcessing] = useState(false);
     const [tasks, setTasks] = useState<TaskModel[]>();
 
     const fetchAllTasks = async() =>{
@@ -27,7 +27,7 @@ const Dashboard = () => {
 
     useEffect(()=>{
         fetchAllTasks()
-    },[isCreating]);
+    },[isProcessing]);
 
     return<Layout>
         <Grid container className=" flex flex-col md:flex md:flex-row ">
@@ -63,8 +63,8 @@ const Dashboard = () => {
                 </div>
             </Grid>
             <Grid item xs={9} className="p-2">
-                <AddTask setIsCreating={setIsCreating}/> 
-                <TaskTable tasks={tasks}/>
+                <AddTask setIsCreating={setIsProcessing}/> 
+                <TaskTable tasks={tasks} setIsDeleting ={setIsProcessing}/>
             </Grid>
         </Grid>
     </Layout>

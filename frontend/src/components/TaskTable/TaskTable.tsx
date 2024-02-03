@@ -25,9 +25,10 @@ import { TaskService } from '../../services/TaskService';
 
 interface IProps {
   tasks: TaskModel[] | undefined;
+  setIsDeleting: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function TaskTable({tasks}: IProps) {
+export default function TaskTable({tasks, setIsDeleting}: IProps) {
 
   const navigate = useNavigate();
   const [order, setOrder] = React.useState<Order>('asc');
@@ -46,10 +47,13 @@ export default function TaskTable({tasks}: IProps) {
   },[rows])
 
   const deleteHandler = async(row_id:string) => {
+        setIsDeleting(true);
        await TaskService.deleteTask(row_id)
         .then((res)=>{
+          setIsDeleting(false);
           console.log(res);
         }).catch((err)=>{
+          setIsDeleting(false);
           console.log(err);
         })
   }
