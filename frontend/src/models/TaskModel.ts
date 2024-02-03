@@ -1,4 +1,5 @@
 export class TaskModel {
+    id: string | undefined
     title: string | undefined;
     description: string | undefined;
     dueDate: Date | undefined;

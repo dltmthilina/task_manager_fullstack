@@ -6,6 +6,7 @@ import { TaskModel } from "../../models/TaskModel"
 const AddTask = () => {
 
     const [task, setTask] = useState<TaskModel>({
+        "id":"",
         "title":"",
         "description":"",
         "dueDate": new Date(),
