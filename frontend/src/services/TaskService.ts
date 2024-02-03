@@ -32,12 +32,12 @@ export class TaskService {
         }
     }
 
-    static async getTaskByTaskId () {
+    static async getTaskByTaskId (taskId:string) {
         
         try {
-            const response = await axios.get(`${basePath}/api/task`, { headers: { "authorization": TaskService.token }});
+            const response = await axios.get(`${basePath}/api/tasks/${taskId}`, { headers: { "authorization": TaskService.token }});
             if(response.data){
-                return TaskModel.fromJsonData(response.data.tasks)
+                return TaskModel.fromJsonData(response.data.task[0])
             }else {
                 console.log(response)
             }
@@ -55,9 +55,9 @@ export class TaskService {
         }
     }
 
-    static async updateTask (tid:string) {
+    static async updateTask (tid:string, data: TaskModel) {
         try {
-            const response = await axios.put(`${basePath}/api/tasks/${tid}`);
+            const response = await axios.put(`${basePath}/api/tasks/${tid}`, data);
             console.log(response)
         } catch (error) {
             console.log(error);

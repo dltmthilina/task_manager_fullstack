@@ -24,7 +24,7 @@ export class TaskModel {
             id: data.id,
             title: data.title,
             description: data.description,
-            due_date: data.dueDate ? data.dueDate.toISOString() : undefined,
+            due_date: data.dueDate,
             status: data.status,
         };
     }
