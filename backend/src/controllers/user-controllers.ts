@@ -8,18 +8,6 @@ const jwt = require('jsonwebtoken');
 const secret = "taskmanager"
 
 
-const getUsers= async(req: Request, res: Response, next: NextFunction)=>{
-
-    let users:typeof User[]
-    try {
-        users = await User.find({}, '-password')
-    } catch (err) {
-        const error = new HttpError("Fetching users failed, please try again later", 500);
-        return next(error)
-    }
-    res.json({users:users.map(user=>user.toObject({getters:true}))})
-};
-
 const signup= async(req: Request, res: Response, next: NextFunction)=>{
 
     const errors = validationResult(req);
@@ -27,7 +15,8 @@ const signup= async(req: Request, res: Response, next: NextFunction)=>{
 
     if(!errors.isEmpty()){
        return res.status(422).json({
-        "Error": "Invalid inputs, please check your data"
+        success: false,
+        message: "Invalid inputs, please check your data"
         })
     }
     
@@ -36,13 +25,15 @@ const signup= async(req: Request, res: Response, next: NextFunction)=>{
         existingUser = await User.findOne({email:email});
     } catch (err) {
         return res.status(422).json({
-            "Error": "Signup failed, please try again later"
+            success: false,
+            message: "Signup failed, please try again later"
         })
     } 
 
     if(existingUser){
         return res.status(422).json({
-            "Error": "Could not create user, email already exist"
+            success: false,
+            message: "Could not create user, email already exist"
         })
     }
 
@@ -51,7 +42,8 @@ const signup= async(req: Request, res: Response, next: NextFunction)=>{
         bcrypt.hash(password, 10, async function (err:any, hash:string) {
             if (err) {
                 return res.status(400).json({
-                    "Error": err.message
+                    success: false,
+                    message: err.message
                 })
             } else {
 
@@ -63,6 +55,8 @@ const signup= async(req: Request, res: Response, next: NextFunction)=>{
                 });
                 user.save().then(() => {
                     return res.status(200).json({
+                        success: true,
+                        message: "Registered user successfully",
                         user:{
                         name :name,
                         email : email,
@@ -75,7 +69,8 @@ const signup= async(req: Request, res: Response, next: NextFunction)=>{
         })
     } catch (err) {
          return res.status(500).json({
-            "Error": "Signin up failed please try again later"
+            success: false,
+            message: "Signin up failed please try again later"
         })
     }
 
@@ -89,6 +84,7 @@ const login= async(req:Request, res: Response, next: NextFunction) =>{
         existingUser = await User.findOne({email:email});
     } catch (err) {
         return res.status(500).json({
+            success: false,
             message: 'Signup failed, please try again later'
         })
     }
@@ -99,6 +95,7 @@ const login= async(req:Request, res: Response, next: NextFunction) =>{
         bcrypt.compare(req.body.password, existingUser.password, function (err:any, result:any) { 
             if (err) {
                 return res.status(401).json({
+                    success: false,
                     message: err.message
                 })
             }
@@ -109,11 +106,13 @@ const login= async(req:Request, res: Response, next: NextFunction) =>{
                 }, secret);
 
                 return res.status(200).json({
+                   success : true,
                    message:"LoggedIn Success",
-                   "token":token
+                   token: token
                 })
             } else {
                 return res.status(401).json({
+                    success: false,
                     message:"Invalid Credentials"
                 })
             }
@@ -124,6 +123,5 @@ const login= async(req:Request, res: Response, next: NextFunction) =>{
     
 }
 
-exports.getUsers= getUsers;
 exports.signup= signup;
 exports.login=login; 
