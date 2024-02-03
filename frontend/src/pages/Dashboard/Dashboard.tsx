@@ -10,9 +10,9 @@ const Dashboard = () => {
 
     const {uid} = useParams();
 
-    const fetchAllTasks = async(uid:string) =>{
+    const fetchAllTasks = async() =>{
         try {
-           const tasks = await TaskService.getTaskByUserId(uid)
+           const tasks = await TaskService.getTaskByUserId()
            console.log(tasks);
         } catch (error) {
             console.log(error);
@@ -20,9 +20,7 @@ const Dashboard = () => {
     }
 
     useEffect(()=>{
-        if(uid){
-            fetchAllTasks(uid)
-        }
+        fetchAllTasks()
     },[]);
 
     return<Layout>

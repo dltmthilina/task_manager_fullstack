@@ -4,19 +4,22 @@ const basePath = process.env.REACT_APP_BACKEND_BASE_URL;
 
 export class TaskService {
 
+   static token = localStorage.getItem('token');
+
     static async createTask (data: TaskModel) {
             console.log(basePath)
         try {
-            const response = await axios.post(`${basePath}/api/tasks/create-task`, data);
+            const response = await axios.post(`${basePath}/api/tasks/create-task`, data, { headers: { "authorization": TaskService.token } });
             console.log(response)
         } catch (error) {
             console.log(error);
         }
     }
 
-    static async getTaskByUserId (uid:string) {
+    static async getTaskByUserId () {
+        
         try {
-            const response = await axios.get(`${basePath}/api/tasks/${uid}`);
+            const response = await axios.get(`${basePath}/api/tasks`, { headers: { "authorization": TaskService.token }});
             return response
         } catch (error) {
             console.log(error);
