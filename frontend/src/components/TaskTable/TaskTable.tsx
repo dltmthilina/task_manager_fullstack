@@ -45,6 +45,14 @@ export default function TaskTable({tasks}: IProps) {
     console.log(rows)
   },[rows])
 
+  const deleteHandler = async(row_id:string) => {
+       await TaskService.deleteTask(row_id)
+        .then((res)=>{
+          console.log(res);
+        }).catch((err)=>{
+          console.log(err);
+        })
+  }
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -103,7 +111,7 @@ export default function TaskTable({tasks}: IProps) {
                         <div className='flex space-x-2'>
                           <VisibilityIcon fontSize="small" onClick={()=>navigate(`/edit-task/${row.id}`)}/>
                           <EditIcon fontSize="small" onClick={()=>navigate(`/edit-task/${row.id}`)}/>
-                          <DeleteIcon fontSize="small"/>
+                          <DeleteIcon fontSize="small" onClick ={()=>deleteHandler(row.id!)}/>
                         </div>
                     </TableCell>
                   </TableRow>

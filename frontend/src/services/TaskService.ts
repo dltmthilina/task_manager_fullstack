@@ -52,7 +52,7 @@ export class TaskService {
 
     static async deleteTask (tid:string) {
         try {
-            const response = await axios.delete(`${basePath}/api/tasks/${tid}`);
+            const response = await axios.delete(`${basePath}/api/tasks/${tid}`, { headers: { "authorization": TaskService.token }});
             console.log(response)
         } catch (error) {
             console.log(error);
