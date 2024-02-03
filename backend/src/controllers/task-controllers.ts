@@ -48,8 +48,9 @@ const getTasksByUserId = async(req:Request, res: Response, next:NextFunction) =>
     res.json({tasks: tasks.map(task=>task.toObject({getters:true}))});
 }
 
-const getTasksByTaskId = async(req:Request, res: Response, next:NextFunction) => {
+const getTaskByTaskId = async(req:Request, res: Response, next:NextFunction) => {
     const task_id = req.params.tid;
+    console.log(task_id)
     const task: typeof Task[] = [];
     try {
         task.push(await Task.findOne({_id : task_id})) ;
@@ -67,7 +68,7 @@ const getTasksByTaskId = async(req:Request, res: Response, next:NextFunction) =>
     }
     res.json({
         success: true,
-        tasks: task.map(task=>task.toObject({getters:true}))
+        task: task.map(task=>task.toObject({getters:true}))
     });
 }
 
@@ -106,7 +107,7 @@ const updateTask = async(req:Request, res: Response, next:NextFunction) => {
         next( new HttpError("Invalid inputs, please check your data", 422));
     }
     
-    const { title, description, dueDate, status, creator} = req.body;
+    const { title, description, dueDate, status} = req.body;
 
     let task: typeof Task;
     try {
@@ -120,7 +121,7 @@ const updateTask = async(req:Request, res: Response, next:NextFunction) => {
     task.description = description;
     task.dueDate = dueDate;
     task.status = status;
-    task.creator = creator;
+    
 
     try {
         await task.save();
@@ -168,4 +169,4 @@ exports.getTasksByUserId = getTasksByUserId;
 exports.updateStatus = updateStatus;
 exports.updateTask = updateTask;
 exports.deleteTask = deleteTask;
-exports.getTasksByTaskId = getTasksByTaskId;
+exports.getTaskByTaskId = getTaskByTaskId;
