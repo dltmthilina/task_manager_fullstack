@@ -115,20 +115,28 @@ const deleteTask = async(req:Request, res: Response, next:NextFunction) => {
     try {
         task = await Task.findById(taskId);
     } catch (err) {
-        const error = new HttpError('Fetching tasks failed, please try again later', 500);
-        return next(error);
+        return res.status(404).json({
+            success: false,
+            message: 'Find tasks failed, please try again later'
+        })
     }
     if(!task ){
-        const error =  new HttpError('Could not find a tasks for the provided id.', 404); 
-        return next(error);
+        return res.status(404).json({
+            success: false,
+            message: 'Could not find a tasks for the provided id.'
+        })
     }
    try{
         await task.deleteOne();
     } catch (err) {
-        const error= new HttpError('Something went wrong', 500);
-        return next(error)
+        return res.status(500).json({
+            success: false,
+            message: 'Something went wrong'
+        })
     }
-    res.status(200).json({message:'Deleted task'})
+    res.status(200).json({
+        success: true,
+        message:'Deleted task'})
 }
 
 
