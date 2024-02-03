@@ -7,6 +7,9 @@ export class UserService {
     static userLogin = async(data:UserModel) => {
         try {
            const response = await axios.post(`${basePath}/api/users/login`, data)
+           if(response.data.success === true){
+            localStorage.setItem('token', response.data.token)
+           }
            return response
     
         } catch (error) {
