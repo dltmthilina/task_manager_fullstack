@@ -113,16 +113,20 @@ const Dashboard = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-col justify-center space-y-8 ">
-                    <div className=" flex space-x-6 items-center rounded-full bg-blue-400 p-4">
+                <div className="flex flex-col justify-center space-y-4 ">
+                    <div className=" flex space-x-4 items-center rounded-full bg-blue-400 py-2 px-4">
                         <Typography variant="h4">{count.total}</Typography>
                         <Button onClick={setRenderAllTasks}>Total tasks</Button>
                     </div>
-                    <div className=" flex space-x-6 items-center rounded-full bg-red-400 p-4">
+                    <div className=" flex space-x-4 items-center rounded-full bg-red-400 py-2 px-4">
                         <Typography variant="h4">{count.pending}</Typography>
                         <Button onClick={()=>setRenderedTasks(filterPendingTasks())}>Pending tasks</Button>
                     </div>
-                    <div className=" flex space-x-6 items-center rounded-full bg-green-400 p-4">
+                    <div className=" flex space-x-4 items-center rounded-full bg-yellow-400 py-2 px-4">
+                        <Typography variant="h4">{count.inProgress}</Typography>
+                        <Button onClick={()=>setRenderedTasks(filterInProgressTasks())}>In Progress</Button>
+                    </div>
+                    <div className=" flex space-x-4 items-center rounded-full bg-green-400 py-2 px-4">
                         <Typography variant="h4">{count.completed}</Typography>
                         <Button onClick={()=>setRenderedTasks(filterCompletedTasks())}>Completed</Button>
                     </div>
