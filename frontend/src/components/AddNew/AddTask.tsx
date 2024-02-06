@@ -15,7 +15,7 @@ const AddTask = ({setIsCreating}: AddProps) => {
         "description":"",
         "dueDate": "",
         "createdDate": new Date(),
-        "status":""  
+        "status":"Pending"  
     })
 
     const submitHandler = async(e:any) => {
