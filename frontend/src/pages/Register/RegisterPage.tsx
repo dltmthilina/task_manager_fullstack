@@ -39,13 +39,14 @@ const RegisterPage: React.FC = () => {
           isShow: true,
         });
         navigate("/");
+      } else {
+        showNotification({
+          message: res?.data.message,
+          code: res?.status,
+          type: "error",
+          isShow: true,
+        });
       }
-      showNotification({
-        message: res?.data.message,
-        code: res?.status,
-        type: "error",
-        isShow: true,
-      });
     } catch (error) {}
   };
 

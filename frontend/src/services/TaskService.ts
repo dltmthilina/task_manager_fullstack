@@ -24,16 +24,7 @@ export class TaskService {
       const response = await axios.get(`${basePath}/api/tasks`, {
         headers: { authorization: TaskService.token },
       });
-      if (response.data) {
-        const tasks: TaskModel[] = [];
-        response.data.tasks.map((t: TaskModel) =>
-          tasks.push(TaskModel.fromJsonData(t))
-        );
-        console.log(tasks);
-        return tasks;
-      } else {
-        console.log(response);
-      }
+      return response;
     } catch (error: any) {
       return error.response;
     }
@@ -57,7 +48,7 @@ export class TaskService {
   static async updateTaskStatus(tid: string) {
     try {
       const response = await axios.patch(`${basePath}/api/tasks/status/${tid}`);
-      console.log(response);
+      return response;
     } catch (error: any) {
       return error.response;
     }
@@ -68,7 +59,7 @@ export class TaskService {
       const response = await axios.put(`${basePath}/api/tasks/${tid}`, data, {
         headers: { authorization: TaskService.token },
       });
-      console.log(response);
+      return response;
     } catch (error: any) {
       return error.response;
     }
@@ -79,7 +70,7 @@ export class TaskService {
       const response = await axios.delete(`${basePath}/api/tasks/${tid}`, {
         headers: { authorization: TaskService.token },
       });
-      console.log(response);
+      return response;
     } catch (error: any) {
       return error.response;
     }
