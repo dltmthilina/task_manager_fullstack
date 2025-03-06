@@ -1,37 +1,44 @@
-import React from 'react';
-import './App.css';
-import LoginPage from './pages/Login/LoginPage';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import Dashboard from './pages/Dashboard/Dashboard';
-import TaskForm from './pages/TaskForm/TaskForm';
-import TaskDetails from './pages/ShowTask/TaskDetails';
-import RegisterPage from './pages/Register/RegisterPage';
+import React from "react";
+import "./App.css";
+import LoginPage from "./pages/Login/LoginPage";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import TaskForm from "./pages/TaskForm/TaskForm";
+import TaskDetails from "./pages/ShowTask/TaskDetails";
+import RegisterPage from "./pages/Register/RegisterPage";
+import { useNotifi } from "./context/NotifiContext";
+import UserAlert from "./components/Alert/UserAlert";
 
 const router = createBrowserRouter([
   {
-    path:'/',
-    element:<LoginPage/>
-  },{
-    path:'/register',
-    element:<RegisterPage/>
+    path: "/",
+    element: <LoginPage />,
   },
   {
-    path:'/dashboard',
-    element:<Dashboard/>
+    path: "/register",
+    element: <RegisterPage />,
   },
   {
-    path:'/edit-task/:taskId',
-    element:<TaskForm/>
+    path: "/dashboard",
+    element: <Dashboard />,
   },
   {
-    path:'/task/:taskId',
-    element:<TaskDetails/>
-  }
+    path: "/edit-task/:taskId",
+    element: <TaskForm />,
+  },
+  {
+    path: "/task/:taskId",
+    element: <TaskDetails />,
+  },
 ]);
 
 function App() {
+  const { notification } = useNotifi();
   return (
-    <RouterProvider router={router} />
+    <>
+      {notification.isShow && <UserAlert />}
+      <RouterProvider router={router} />
+    </>
   );
 }
 

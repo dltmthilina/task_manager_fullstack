@@ -6,39 +6,49 @@ import { useState } from "react";
 import { userValidationSchema } from "../../common/validatios";
 import { UserService } from "../../services/UserService";
 import { Link, useNavigate } from "react-router-dom";
+import { useNotifi } from "../../context/NotifiContext";
 
 const LoginPage = () => {
-
   const navigate = useNavigate();
+  const { showNotification } = useNotifi();
 
   const [initialData, setInitialData] = useState<UserModel>({
     name: "",
     email: "",
     password: "",
     imageUrl: "",
-});
-
+  });
 
   const formik = useFormik({
-    initialValues:initialData,
-    onSubmit: async(values)=>{
+    initialValues: initialData,
+    onSubmit: async (values) => {
       await UserService.userLogin(values)
-      .then((res)=>{
-        if(res?.status === 200){
+        .then((res) => {
+          if (res?.status === 200) {
+            showNotification({
+              message: res?.data.message,
+              code: res.status,
+              type: "success",
+              isShow: true,
+            });
             navigate("/dashboard");
-        } else{
-          return
-        }
-      })
-      .catch((err)=>console.log(err));
-    }
+          } else {
+            showNotification({
+              message: res?.data.message,
+              code: res?.status,
+              type: "error",
+              isShow: true,
+            });
+          }
+        })
+        .catch((err) => console.log(err));
+    },
   });
 
   return (
     <div>
       <div className="flex flex-col items-center justify-center bg-gray-100 min-h-screen">
         <Grid container component="main" className="w-full">
-
           {/* Image Section */}
           <Grid item xs={12} sm={6} className="mb-6 sm:mb-0">
             <img
@@ -49,13 +59,24 @@ const LoginPage = () => {
           </Grid>
 
           {/* Form Section */}
-          <Grid item xs={12} sm={6} component={Paper} square className="flex justify-center items-center md:h-screen">
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            component={Paper}
+            square
+            className="flex justify-center items-center md:h-screen"
+          >
             <div className="p-6 md:w-96 w-full">
               <Typography component="h1" variant="h5" className="mb-4">
                 Login
               </Typography>
-              
-              <form noValidate onSubmit={formik.handleSubmit} className="flex flex-col space-y-4">
+
+              <form
+                noValidate
+                onSubmit={formik.handleSubmit}
+                className="flex flex-col space-y-4"
+              >
                 <TextField
                   variant="outlined"
                   margin="normal"
@@ -89,10 +110,11 @@ const LoginPage = () => {
                   Sign In
                 </Button>
               </form>
-              <Typography>Don't have an account? <Link to="/register">Register</Link></Typography>
+              <Typography>
+                Don't have an account? <Link to="/register">Register</Link>
+              </Typography>
             </div>
           </Grid>
-
         </Grid>
       </div>
     </div>

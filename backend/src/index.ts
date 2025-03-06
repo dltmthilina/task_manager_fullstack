@@ -16,7 +16,7 @@ interface CustomError extends Error {
 }
 
 const app: Express = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 const mongodb_url = process.env.MONGODB_API || "";
 
 app.use(express.json());
@@ -45,7 +45,9 @@ mongoose
   .connect(mongodb_url)
   .then(() => {
     console.log("connected to the database");
-    app.listen(port);
+    app.listen(port, () => {
+      console.log(`Server running on ${port}`);
+    });
   })
   .catch((err) => {
     console.log(err);
